@@ -16,24 +16,17 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package com.ncredinburgh.sonar.scalastyle
+package com.ncredinburgh.sonar.scalastyle.core
 
-import org.sonar.api.SonarPlugin
-import scala.collection.mutable.ListBuffer
-import scala.collection.JavaConversions._
-import org.sonar.api.Extension
-import com.ncredinburgh.sonar.scalastyle.core.Scala
+import com.ncredinburgh.sonar.scalastyle.Constants
+import org.sonar.api.config.Settings
+import org.sonar.api.resources.AbstractLanguage
 
 /**
- * Plugin entry point.
+ * Defines Scala as a language for SonarQube.
+ * It creates two Scala languages if used with the Sonar Scala Plugin.
+ * When the Sonar Scala Plugin relased this class should be deleted and the plugin should depend on it.
  */
-class ScalastylePlugin extends SonarPlugin {
-  override def getExtensions: java.util.List[Class[_ <: Extension]] = ListBuffer(
-    classOf[Scala],
-    classOf[ScalastyleRepository],
-    classOf[ScalastyleQualityProfile],
-    classOf[ScalastyleSensor]
-  )
-
-  override val toString = getClass.getSimpleName
+class Scala(s: Settings) extends AbstractLanguage(Constants.ScalaKey, "Scala") {
+  override def getFileSuffixes: Array[String] = Array("scala")
 }
